@@ -1,9 +1,11 @@
 name: Build Windows App
 
 on:
-workflow_dispatch:   # 手动触发
+workflow_dispatch:
 push:
-branches: [ main ]
+branches:
+- main
+- master
 
 jobs:
 build-windows:
@@ -14,29 +16,23 @@ steps:
   - name: Checkout
     uses: actions/checkout@v4
 
-  # 安装 Node
   - name: Setup Node
     uses: actions/setup-node@v4
     with:
-      node-version: 20
+      node-version: '20'
 
-  # 安装 pnpm
   - name: Install pnpm
     run: npm install -g pnpm
 
-  # 安装 Rust
   - name: Setup Rust
     uses: dtolnay/rust-toolchain@stable
 
-  # 安装依赖
   - name: Install dependencies
     run: pnpm install
 
-  # 构建（Tauri）
   - name: Build app
     run: pnpm tauri build
 
-  # 上传构建结果
   - name: Upload artifact
     uses: actions/upload-artifact@v4
     with:
