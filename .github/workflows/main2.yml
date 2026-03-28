@@ -2,13 +2,9 @@ name: Build Windows App
 
 on:
 workflow_dispatch:
-push:
-branches:
-- main
-- master
 
 jobs:
-build-windows:
+build:
 runs-on: windows-latest
 
 ```
@@ -30,12 +26,6 @@ steps:
   - name: Install dependencies
     run: pnpm install
 
-  - name: Build app
+  - name: Build
     run: pnpm tauri build
-
-  - name: Upload artifact
-    uses: actions/upload-artifact@v4
-    with:
-      name: clash-verge-windows
-      path: src-tauri/target/release/bundle/
 ```
